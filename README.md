@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ScrapeIt
 
-## Getting Started
+ScrapeIt is a project aimed at enhancing the efficiency of front-end development by automating the conversion of scraped HTML and CSS into reusable, responsive Next.js components styled with Tailwind CSS. By leveraging modern web scraping tools and AI-powered models, ScrapeIt empowers developers to focus on functionality and core features rather than repetitive design tasks.
 
-First, run the development server:
+## Features
+- **Automated HTML & CSS Conversion**: Transform scraped HTML and CSS into responsive Next.js components styled with Tailwind CSS.
+- **Design Scraping Flexibility**: Use Puppeteer and Cheerio to scrape designs from any website and integrate them seamlessly into projects.
+- **AI-Powered Enhancements**: Leverage Hugging Face API and other AI models to intelligently process and generate component structures.
+- **Focus on Reusability**: Output reusable components with meaningful class names, enabling consistent and maintainable front-end development.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tech Stack
+- **JavaScript**: Core language for Puppeteer and Cheerio for web scraping.
+- **Python**: Used for integrating and fine-tuning AI models.
+- **Node.js**: Backend server to handle scraping and processing workflows.
+- **Tailwind CSS**: Styling framework for generating clean, responsive designs.
+- **Hugging Face API**: Provides the AI-powered models to analyze and convert design data.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Current Exploration
+- Fine-tuning the [CodeT5 model](https://huggingface.co/Salesforce/codet5) for HTML-to-component conversion.
+- Exploring efficient ways to handle limited local storage by utilizing cloud-based solutions or lightweight models.
+- Investigating alternatives to improve model outputs for generating accurate and reusable Next.js components.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Limitations
+- **Storage Constraints**: Limited local storage capacity prevents the use of larger models or datasets.
+- **AI Model Accuracy**: Current models sometimes produce inconsistent outputs, requiring further fine-tuning and testing.
+- **New to AI Integration**: This is my first project incorporating AI models into web development, leading to a steep learning curve for fine-tuning and deployment.
+- **Limited Resources**: Exploring cost-effective or free solutions, such as Hugging Face API, to avoid reliance on expensive cloud platforms.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Future Goals
+1. Develop a streamlined pipeline to scrape, transform, and generate reusable components efficiently.
+2. Enhance model accuracy to produce high-quality Next.js components styled with Tailwind CSS.
+3. Expand the functionality to support additional frameworks and custom design preferences.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
