@@ -1,0 +1,11 @@
+[
+    {
+      "input": "<div><h1>Hello World</h1></div>",
+      "output": "<div className='container'><h1 className='text-4xl'>Hello World</h1></div>"
+    },
+    {
+      "input": "<button>Click Me</button>",
+      "output": "<button className='btn-primary'>Click Me</button>"
+    }
+  ]
+  
