@@ -1,4 +1,4 @@
-## Updates
+## Updates (01/20/2025)
 Most likely will be moving away from using HuggingFace for this project
 **Reasons**
 - HuggingFace Auto Train costs money
