@@ -29,7 +29,7 @@ ScrapeIt is a project aimed at enhancing the efficiency of front-end development
 - **Tailwind CSS**: Styling framework for generating clean, responsive designs.
 - **Hugging Face API**: Provides the AI-powered models to analyze and convert design data.
 
-## Current Exploration
+## Current Exploration (Might be changed)
 - Fine-tuning the [CodeT5 model](https://huggingface.co/Salesforce/codet5) for HTML-to-component conversion.
 - Exploring efficient ways to handle limited local storage by utilizing cloud-based solutions or lightweight models.
 - Investigating alternatives to improve model outputs for generating accurate and reusable Next.js components.
