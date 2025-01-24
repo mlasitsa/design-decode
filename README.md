@@ -11,6 +11,7 @@ Most likely will be moving away from using HuggingFace for this project
 - To reduce tokens usage I will prompt user for which specific part of the website he wants to get jsx tailwind component
 - **Issue**: custom classes -> **Solution** I will find a link tag with a ref of stylesheet and get the href, then get acess to css file and will look for tags names that are in class property (hopefully it makes sense)
 
+More update to come soon
 # ScrapeIt
 
 ScrapeIt is a project aimed at enhancing the efficiency of front-end development by automating the conversion of scraped HTML and CSS into reusable, responsive Next.js components styled with Tailwind CSS. By leveraging modern web scraping tools and AI-powered models, ScrapeIt empowers developers to focus on functionality and core features rather than repetitive design tasks.
