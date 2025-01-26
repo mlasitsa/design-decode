@@ -11,6 +11,9 @@ Most likely will be moving away from using HuggingFace for this project
 - To reduce tokens usage I will prompt user for which specific part of the website he wants to get jsx tailwind component
 - **Issue**: custom classes -> **Solution** I will find a link tag with a ref of stylesheet and get the href, then get acess to css file and will look for tags names that are in class property (hopefully it makes sense)
 
+## Updates (01/26/2025) 
+Trying out deepseek model which is less than 10GB from huggingface so I can run if on HF server 
+
 More update to come soon
 # ScrapeIt
 
