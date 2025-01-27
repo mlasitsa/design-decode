@@ -8,7 +8,7 @@ load_dotenv()
 # Get the Hugging Face API token from the environment
 api_token = os.getenv("HUGGINGFACE_TOKEN")
 if not api_token:
-    raise ValueError("API token not found in .env file.Please add HUGGINGFACE_TOKEN.")
+    raise ValueError("API token not found in .env file. Please add HUGGINGFACE_TOKEN.")
 
 # Define model and API endpoint
 model_name = "deepseek-ai/deepseek-coder-1.3b-base"  # Your specified model
