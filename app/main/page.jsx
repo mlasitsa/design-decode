@@ -6,14 +6,15 @@ import { useState } from 'react';
 const Main = () => {
     const [link, setLink] = useState("");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e, link) => {
       e.preventDefault();
       console.log("Link submitted:", link);
       // Add logic here to handle the submitted link
     };
+
   
     return (
-      <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
+      <form onSubmit={(e) => {handleSubmit(e, link)}} className="max-w-sm mx-auto">
         <div className="mb-5">
           <label
             htmlFor="link"
