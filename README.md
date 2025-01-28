@@ -13,6 +13,7 @@ Most likely will be moving away from using HuggingFace for this project
 
 ## Updates (01/26/2025) 
 Trying out deepseek model which is less than 10GB from huggingface so I can run if on HF server 
+Deepseek little model seems working fine as of now
 
 More update to come soon
 # ScrapeIt
