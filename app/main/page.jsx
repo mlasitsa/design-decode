@@ -2,8 +2,8 @@
 
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import { scrapePage } from '@/utils/puppeteer';
-import { preprocessHTML } from '@/utils/cheerio';
+//import { scrapePage } from '../api/scrape/route';
+//import { preprocessHTML } from '@/utils/cheerio';
 
 const Main = () => {
     const [link, setLink] = useState("");
@@ -18,7 +18,7 @@ const Main = () => {
         try {
           setLoading(true);
           const html = await scrapePage(link);
-          const elements = await preprocessHTML(html);
+          //const elements = await preprocessHTML(html);
           console.log("Elements:", elements);
 
         } catch {
