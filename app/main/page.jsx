@@ -1,10 +1,34 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
+import { scrapePage } from '@/utils/puppeteer';
+import { preprocessHTML } from '@/utils/cheerio';
 
 const Main = () => {
     const [link, setLink] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+
+      const handleSubmit = async(e, link) => {
+        e.preventDefault();
+        console.log("Link submitted:", link);
+
+        try {
+          setLoading(true);
+          const html = await scrapePage(link);
+          const elements = await preprocessHTML(html);
+          console.log("Elements:", elements);
+
+        } catch {
+          console.error("Error scraping the page:", error);
+        }
+        finally {
+          setLoading(false);
+        }
+      }
+    }, [link]);
 
     const handleSubmit = (e, link) => {
       e.preventDefault();
