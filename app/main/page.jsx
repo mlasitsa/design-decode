@@ -1,41 +1,32 @@
 "use client"
 
+import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 //import { scrapePage } from '../api/scrape/route';
 //import { preprocessHTML } from '@/utils/cheerio';
 
+
 const Main = () => {
     const [link, setLink] = useState("");
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-
-      const handleSubmit = async(e, link) => {
-        e.preventDefault();
-        console.log("Link submitted:", link);
-
-        try {
-          setLoading(true);
-          const html = await scrapePage(link);
-          //const elements = await preprocessHTML(html);
-          console.log("Elements:", elements);
-
-        } catch {
-          console.error("Error scraping the page:", error);
-        }
-        finally {
-          setLoading(false);
-        }
-      }
-    }, [link]);
-
-    const handleSubmit = (e, link) => {
+  
+      
+    const handleSubmit = async(e, link) => {
       e.preventDefault();
       console.log("Link submitted:", link);
-      // Add logic here to handle the submitted link
-    };
-
+    
+      try {
+        setLoading(true);
+        const response = await axios.get(`/api/scrape?url=${link}`);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false); 
+      }
+    }
+    
   
     return (
       <form onSubmit={(e) => {handleSubmit(e, link)}} className="max-w-sm mx-auto">

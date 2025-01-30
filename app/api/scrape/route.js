@@ -1,28 +1,40 @@
-const puppeteer = require('puppeteer');
+import { NextApiRequest, NextApiResponse } from "next";
+import { scrapePage } from "@/utils/puppeteer";
+import { preprocessHTML } from "@/utils/cheerio";
 
-// Function to scrape a webpage
-async function scrapePage(url) {
-  // Launch a headless browser
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-
-  try {
-    // Navigate to the provided URL
-    await page.goto(url, { waitUntil: 'domcontentloaded' });
-
-    // Extract the page content (HTML)
-    const html = await page.content();
-
-    // Close the browser
-    await browser.close();
-
-    // Return the HTML
-    return html;
-  } catch (error) {
-    console.error('Error scraping the page:', error);
-    await browser.close();
-    throw error; // Rethrow the error for handling by the API route
+export async function GET(req, res) {
+    const { searchParams } = new URL(req.url, "http://localhost:3000"); // Extract query params
+    const url = searchParams.get("url"); // ✅ Get URL from query string
+  
+    if (!url) {
+      return res.status(400).json({ error: "URL parameter is required" });
+    }
+  
+    try {
+      // Get HTML from Puppeteer
+      const html = await scrapePage(url);
+  
+      // Use Cheerio to parse HTML
+      const $ = cheerio.load(html);
+      const elements = [];
+  
+      // Extract all elements
+      $("*").each((index, element) => {
+        const tagName = element.tagName;
+        const attributes = element.attribs; // Extract all attributes
+        const content = $(element).html()?.trim() || ""; // Extract inner content (if any)
+  
+        if (tagName !== "script") {
+          elements.push({ tagName, attributes, content });
+        }
+      });
+  
+      res.status(200).json({ elements });
+    } catch (error) {
+      console.error("Error in preprocessing:", error);
+      res.status(500).json({ error: "Error preprocessing HTML" });
+    }
   }
-}
+  
 
-module.exports = { scrapePage };
+
