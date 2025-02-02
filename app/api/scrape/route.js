@@ -3,7 +3,7 @@ import * as cheerio from "cheerio";
 
 export async function POST(req) {
   try {
-    const { link } = await req.json(); // ✅ Extract URL from request body
+    const { link } = await req.json(); 
     if (!link) return Response.json({ error: "Missing URL parameter" }, { status: 400 });
 
     const elements = await preprocessHTML(link);
@@ -25,7 +25,7 @@ async function scrapePage(url) {
     console.error("Error scraping the page:", error);
     throw error;
   } finally {
-    await browser.close(); // ✅ Always close the browser
+    await browser.close();
   }
 }
 

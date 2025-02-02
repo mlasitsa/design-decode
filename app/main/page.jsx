@@ -15,7 +15,7 @@ export default function Main() {
     try {
       setLoading(true);
       
-      // ✅ Make a POST request with JSON body
+      
       const response = await axios.post("/api/scrape", { link });
 
       console.log("Response:", response.data);
