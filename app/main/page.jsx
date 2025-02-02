@@ -1,40 +1,37 @@
-"use client"
+"use client";
 
-import axios from 'axios';
-import React, { useEffect } from 'react'
-import { useState } from 'react';
-//import { scrapePage } from '../api/scrape/route';
-//import { preprocessHTML } from '@/utils/cheerio';
+import { useState } from "react";
+import axios from "axios";
 
+export default function Main() {
+  const [link, setLink] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [responseData, setResponseData] = useState(null);
 
-const Main = () => {
-    const [link, setLink] = useState("");
-    const [loading, setLoading] = useState(false);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Submitting link:", link);
 
-  
+    try {
+      setLoading(true);
       
-    const handleSubmit = async(e, link) => {
-      e.preventDefault();
-      console.log("Link submitted:", link);
-    
-      try {
-        setLoading(true);
-        const response = await axios.get(`/api/scrape?url=${link}`);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setLoading(false); 
-      }
+      // ✅ Make a POST request with JSON body
+      const response = await axios.post("/api/scrape", { link });
+
+      console.log("Response:", response.data);
+      setResponseData(response.data);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
     }
-    
-  
-    return (
-      <form onSubmit={(e) => {handleSubmit(e, link)}} className="max-w-sm mx-auto">
+  };
+
+  return (
+    <div className="max-w-sm mx-auto">
+      <form onSubmit={handleSubmit}>
         <div className="mb-5">
-          <label
-            htmlFor="link"
-            className="block mb-2 text-sm font-bold text-gray-900 dark:text-white"
-          >
+          <label htmlFor="link" className="block mb-2 text-sm font-bold text-gray-900">
             Enter Link
           </label>
           <input
@@ -42,19 +39,26 @@ const Main = () => {
             id="link"
             value={link}
             onChange={(e) => setLink(e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="border p-2 w-full"
             placeholder="https://example.com"
             required
           />
         </div>
         <button
           type="submit"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+          disabled={loading}
         >
-          Get Design
+          {loading ? "Loading..." : "Get Design"}
         </button>
       </form>
-    );
-  }
 
-export default Main
+      {responseData && (
+        <div className="mt-4 p-3 border">
+          <h3 className="font-bold">Response Data:</h3>
+          <pre className="text-sm">{JSON.stringify(responseData, null, 2)}</pre>
+        </div>
+      )}
+    </div>
+  );
+}
