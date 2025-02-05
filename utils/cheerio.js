@@ -18,7 +18,9 @@ async function preprocessHTML(url) {
       const content = $(element).html()?.trim() || ''; // Extract inner content (if any)
 
       // Push every tag into the elements array
-      if (tagName != "script") {
+      if (tagName == "script" | tagName == "link" | tagName == "animate") {
+        return;
+      } else {
         elements.push({ tagName, attributes, content });
       }
     });
@@ -30,4 +32,24 @@ async function preprocessHTML(url) {
   }
 }
 
-module.exports = { preprocessHTML };
+async function getCssStles(url) {
+  try {
+    
+    const html = await scrapePage(url);
+
+    // Use Cheerio to parse HTML
+    const $ = cheerio.load(html);
+    const styles = [];
+
+    $("link[rel='stylesheet']").each((i, el) => {
+      styles.push($(el).attr("href")); // Get the href attribute
+    });
+
+    return styles;
+} catch (error) {
+  console.error('Error in getting styles:', error);
+  throw error;
+}
+}
+
+module.exports = { preprocessHTML, getCssStles };

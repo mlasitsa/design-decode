@@ -31,23 +31,30 @@ async function scrapePage(url) {
 
 async function preprocessHTML(url) {
   try {
+    // Get HTML from Puppeteer
     const html = await scrapePage(url);
+
+    // Use Cheerio to parse HTML
     const $ = cheerio.load(html);
     const elements = [];
 
-    $("*").each((index, element) => {
+    // Extract all elements
+    $('*').each((index, element) => {
       const tagName = element.tagName;
-      const attributes = element.attribs;
-      const content = $(element).html()?.trim() || "";
+      const attributes = element.attribs; // Extract all attributes
+      const content = $(element).html()?.trim() || ''; // Extract inner content (if any)
 
-      if (tagName !== "script") {
+      // Push every tag into the elements array
+      if (tagName == "script" | tagName == "link" | tagName == "animate") {
+        return;
+      } else {
         elements.push({ tagName, attributes, content });
       }
     });
 
-    return elements;
+    return elements; // Return the parsed elements
   } catch (error) {
-    console.error("Error in preprocessing:", error);
-    throw error;
-  }
+    console.error('Error in preprocessing:', error);
+    throw error; // Rethrow for handling
+}
 }
