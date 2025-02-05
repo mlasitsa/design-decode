@@ -14,3 +14,9 @@ Most likely will be moving away from using HuggingFace for this project
 ## Updates (01/26/2025) 
 Trying out deepseek model which is less than 10GB from huggingface so I can run if on HF server 
 Deepseek little model seems working fine as of now
+
+
+## Updates (02/04/2025)
+Working on skippin through unnessary elements like <script> etc
+Adding function to find an href of a stylesheet since I will need its data to be able to copy the design
+Also might need to work on splitting sending data by chunks, since AI agent might not be able to get long input data
