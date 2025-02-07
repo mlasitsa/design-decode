@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import splitData from "@/utils/splitdata";
 
 dotenv.config();
 
@@ -22,11 +23,21 @@ export async function POST(req) {
           headers: { "Content-Type": "application/json" },
         });
       }
+
+      const splittedData = splitData(elements);
+      // do for loop to call push element by element with taskDescription variable
+
+      // do same process for css files?
+
+      // call final task description?
+
   
       const taskDescription = `
-        Convert the given HTML elements into reusable React components styled with Tailwind CSS.
-        Ensure each element is properly structured into components.
+        This is a portion of the content of a webpage. I will have more of these, just wait till I give you last prompt.
       `;
+
+      const finalTaskDescription = `Last Prompt! Now using messages I sent above convert the given HTML elements into reusable React (using Next.js library) components styled with Tailwind CSS. 
+        Ensure each element is properly structured into components. All of the css files are also provided in the messages, so map them properly to the components.`;
   
       const inputText = `${taskDescription}\n${JSON.stringify(elements)}`;
   
