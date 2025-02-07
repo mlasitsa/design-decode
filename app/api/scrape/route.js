@@ -37,6 +37,7 @@ async function preprocessHTML(url) {
     // Use Cheerio to parse HTML
     const $ = cheerio.load(html);
     const elements = [];
+    const cssLink = [];
 
     // Extract all elements
     $('*').each((index, element) => {
@@ -44,8 +45,14 @@ async function preprocessHTML(url) {
       const attributes = element.attribs; // Extract all attributes
       const content = $(element).html()?.trim() || ''; // Extract inner content (if any)
 
-      // Push every tag into the elements array
-      if (tagName == "script" | tagName == "link" | tagName == "animate") {
+      // if tag name == link and rel == stylesheet, we push it ro cssLink since we need these link for styles
+      if (tagName == "link" && attributes.rel === "stylesheet") {
+        if (attributes.href) {
+          cssLink.push(attributes.href);
+        }     
+      } 
+        
+      else if (tagName == "script" || tagName == "animate" || tagName == "link" && attributes.rel !== "stylesheet") {
         return;
       } else {
         elements.push({ tagName, attributes, content });

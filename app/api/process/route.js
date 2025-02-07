@@ -1,5 +1,4 @@
 import dotenv from "dotenv";
-import splitData from "@/utils/splitdata";
 
 dotenv.config();
 
@@ -23,8 +22,6 @@ export async function POST(req) {
           headers: { "Content-Type": "application/json" },
         });
       }
-
-      const splittedData = splitData(elements);
       // do for loop to call push element by element with taskDescription variable
 
       // do same process for css files?
