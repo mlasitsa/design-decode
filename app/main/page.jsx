@@ -38,6 +38,11 @@ export default function Main() {
       setLoading(false);
     }
   };
+
+  const testOpenAi = async () => {
+    const response = await axios.post("/api/process", { message: "Hello, this is test" });
+    console.log(response.data);
+  }
   
 
 
@@ -74,6 +79,7 @@ export default function Main() {
           <pre className="text-sm">{proccessedData}</pre>
         </div>
       )}
+      <button onClick={() => testOpenAi()}>Test</button>
     </div>
   );
 }
