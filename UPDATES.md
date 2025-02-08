@@ -26,4 +26,4 @@ I am not sure if splitting would work since huggingface deepseek model might not
 And I think splitting the data is the only way I can handle it ?
 Maybe instead of pushing towards making it for free I should consider using API calls to Claude of OpenAI
 This will simplify the process, but will cost some money. Maybe stick to deepseek just API since its fairly cheap
-I think I will try to use **GPT-4-Turbo** first
+I think I will try to use **GPT-4o** first
