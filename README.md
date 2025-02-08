@@ -1,3 +1,5 @@
+## SUBJECT TO CHANGE ON TECH STACK
+
 # ScrapeIt
 
 ScrapeIt is a project aimed at enhancing the efficiency of front-end development by automating the conversion of scraped HTML and CSS into reusable, responsive Next.js components styled with Tailwind CSS. By leveraging modern web scraping tools and AI-powered models, ScrapeIt empowers developers to focus on functionality and core features rather than repetitive design tasks.
