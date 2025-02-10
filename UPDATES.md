@@ -27,3 +27,11 @@ And I think splitting the data is the only way I can handle it ?
 Maybe instead of pushing towards making it for free I should consider using API calls to Claude of OpenAI
 This will simplify the process, but will cost some money. Maybe stick to deepseek just API since its fairly cheap
 I think I will try to use **GPT-4o** first
+
+
+## Updates (02/09/2025)
+Tried using GitHub Market OpenAI model that is hosted on Azure, but 
+it doesnt have chat memory, figured through basic testing. 
+I know I am trying to be cheap and I am paying a price for it, 
+so I guess using Open Ai API is the answer
+Maybe I should try deepseek since its cheaper? hehe
