@@ -35,3 +35,18 @@ it doesnt have chat memory, figured through basic testing.
 I know I am trying to be cheap and I am paying a price for it, 
 so I guess using Open Ai API is the answer
 Maybe I should try deepseek since its cheaper? hehe
+
+Approach 1:
+Maybe I can try to split elements by header, nav, body, footer
+for div tag I can just use stack datastucture, if its openeing then add to stack, 
+if its closing then pop top one and push its elements (need to revisit this approach)
+store them seperately in different variables
+
+but then I can try to get all of this elements and parse through css and look for ids 
+that I need, once its done, send this to ai componenet by componenet to process ??? 
+
+
+## Updates (02/11/2025)
+Currently prepping for something, didnt have that much time to work on it, 
+but I am exited to be back soon! 
+Stay updated! 
