@@ -61,4 +61,4 @@ I wish I knew that Open AI has tiers and my tier at most can support 200.000 for
 Good News is that DeepSeek might not have a limit at all
 Might also look into Claude or Gemini
 
-Open AI is great but looks like all they want it moooooeny haha, just kidding
+Open AI is great but looks like all they want it moooney haha, just kidding
