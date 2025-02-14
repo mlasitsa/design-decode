@@ -3,13 +3,13 @@ import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
 
-dotenv.config(); // Load environment variables
+dotenv.config();
 
-const openai = new OpenAI({ apiKey: process.env.GPT4API }); // Use GPT4API from .env
+const openai = new OpenAI({ apiKey: process.env.GPT4API }); 
 
 export async function POST(req) {
   try {
-    // Step 1: Ensure OpenAI API key exists
+    // Step 1: Check if OpenAI API key is set
     if (!process.env.GPT4API) {
       return new Response(JSON.stringify({ error: "Missing OpenAI API key" }), { status: 500 });
     }

@@ -70,6 +70,6 @@ async function preprocessHTML(url) {
     return elements; // Return the parsed elements
   } catch (error) {
     console.error('Error in preprocessing:', error);
-    throw error; // Rethrow for handling
+    throw error; 
 }
 }
