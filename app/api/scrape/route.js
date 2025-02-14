@@ -1,5 +1,7 @@
 import puppeteer from "puppeteer";
 import * as cheerio from "cheerio";
+import fs from "fs";
+import path from "path";
 
 export async function POST(req) {
   try {
@@ -7,7 +9,13 @@ export async function POST(req) {
     if (!link) return Response.json({ error: "Missing URL parameter" }, { status: 400 });
 
     const elements = await preprocessHTML(link);
-    return Response.json({ elements }, { status: 200 });
+
+    const filePath = path.join(process.cwd(), "public", "scraped_content.json");
+
+    // Write data to a JSON file
+    fs.writeFileSync(filePath, JSON.stringify(elements, null, 2));
+
+    return Response.json({ filePath }, { status: 200 });
   } catch (error) {
     console.error("Error:", error);
     return Response.json({ error: "Something went wrong" }, { status: 500 });

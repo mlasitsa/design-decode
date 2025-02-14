@@ -1,37 +1,51 @@
 import OpenAI from "openai";
+import fs from "fs";
+import path from "path";
 import dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config(); // Load environment variables
 
-const openai = new OpenAI({
-  apiKey: process.env.GPT4API, // Ensure this is set in .env
-});
+const openai = new OpenAI({ apiKey: process.env.GPT4API }); // Use GPT4API from .env
 
 export async function POST(req) {
   try {
-    const { message } = await req.json(); // Accept a message input
-
-    if (!message) {
-      return new Response(JSON.stringify({ error: "Message is required" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+    // Step 1: Ensure OpenAI API key exists
+    if (!process.env.GPT4API) {
+      return new Response(JSON.stringify({ error: "Missing OpenAI API key" }), { status: 500 });
     }
 
+    // Step 2: Read the HTML file
+    const filePath = path.join(process.cwd(), "public", "scraped_content.json");
+
+    if (!fs.existsSync(filePath)) {
+      return new Response(JSON.stringify({ error: "File not found" }), { status: 404 });
+    }
+
+    const fileContent = fs.readFileSync(filePath, "utf8");
+
+    // Step 3: Send request to OpenAI for conversion
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o", // Ensure you have access to this model
-      messages: [{ role: "user", content: message }],
+      model: "gpt-4o",
+      messages: [
+        {
+          role: "system",
+          content: `Convert the given HTML structure into reusable Next.js components. 
+          - Use functional components with Tailwind CSS.
+          - Ensure components are properly named and structured.
+          - If you detect repeating patterns, extract them into reusable components.
+          - Format output as proper Next.js components.`,
+        },
+        { role: "user", content: `Here is the HTML:\n${fileContent}` },
+      ],
     });
 
-    return new Response(JSON.stringify({ response: completion.choices[0].message.content }), {
+    return new Response(JSON.stringify({ components: completion.choices[0].message.content }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
+
   } catch (error) {
-    console.error("OpenAI API error:", error);
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+    console.error("Error processing file:", error);
+    return new Response(JSON.stringify({ error: "Processing failed", details: error.message }), { status: 500 });
   }
 }

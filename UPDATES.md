@@ -50,3 +50,15 @@ that I need, once its done, send this to ai componenet by componenet to process 
 Currently prepping for something, didnt have that much time to work on it, 
 but I am exited to be back soon! 
 Stay updated! 
+
+## Updates (02/14/2025)
+Deposited 5$ to Open AI
+Used file based approach and hit this error:
+**429 Request too large for gpt-4o in organization org-####### on tokens per min (TPM): Limit 30000, Requested 821408. The input or output tokens must be reduced in order to run successfully.**
+
+I wish I knew that Open AI has tiers and my tier at most can support 200.000 for lower model
+
+Good News is that DeepSeek might not have a limit at all
+Might also look into Claude or Gemini
+
+Open AI is great but looks like all they want it moooooeny haha, just kidding
