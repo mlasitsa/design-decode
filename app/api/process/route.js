@@ -5,12 +5,15 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const openai = new OpenAI({ apiKey: process.env.GPT4API }); 
+const openai = new OpenAI({  
+  baseURL: 'https://api.deepseek.com',
+  apiKey: process.env.DEEPSEEK_API 
+}); 
 
 export async function POST(req) {
   try {
     // Step 1: Check if OpenAI API key is set
-    if (!process.env.GPT4API) {
+    if (!process.env.DEEPSEEK_API) {
       return new Response(JSON.stringify({ error: "Missing OpenAI API key" }), { status: 500 });
     }
 
@@ -25,7 +28,7 @@ export async function POST(req) {
 
     // Step 3: Send request to OpenAI for conversion
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: "deepseek-chat",
       messages: [
         {
           role: "system",
