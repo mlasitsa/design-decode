@@ -62,3 +62,10 @@ Good News is that DeepSeek might not have a limit at all
 Might also look into Claude or Gemini
 
 Open AI is great but looks like all they want it moooney haha, just kidding
+
+
+## Updates (02/16/2025)
+Changed API to call deepseek, but ran into 402: Insuffecient funds
+At the moment they ran into an issue and you cant deposit any money,
+so I cant test my request. Waiting for Deepseek to restore service
+
