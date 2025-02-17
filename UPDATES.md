@@ -62,3 +62,7 @@ Good News is that DeepSeek might not have a limit at all
 Might also look into Claude or Gemini
 
 Open AI is great but looks like all they want it moooney haha, just kidding
+
+
+## My computer wont turn on (submitting this from my phone)
+trying to troubleshoot it 
