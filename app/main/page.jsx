@@ -9,6 +9,7 @@ export default function Main() {
   const [responseData, setResponseData] = useState(null);
   const [processedData, setProcessedData] = useState(null);
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitting link:", link);
@@ -16,7 +17,7 @@ export default function Main() {
 
     try {
       // First API call: Scrape the page
-      const scrapeResponse = await axios.post("/api/scrape", { link });
+      const scrapeResponse = await axios.post(`/api/scrape`, { link });
       console.log("Scraped Data:", scrapeResponse.data);
 
       if (!scrapeResponse.data || !scrapeResponse.data.filePath) {
@@ -82,7 +83,9 @@ export default function Main() {
         >
           {loading ? "Loading..." : "Get Design"}
         </button>
+
       </form>
+      
 
       {processedData && (
         <div className="mt-4 p-3 border bg-gray-100">

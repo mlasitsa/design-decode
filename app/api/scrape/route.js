@@ -60,10 +60,11 @@ async function preprocessHTML(url) {
         }     
       } 
         
-      else if (tagName == "script" || tagName == "animate" || tagName == "link" && attributes.rel !== "stylesheet") {
-        return;
-      } else {
+      else if (tagName == "body" || tagName == "nav" || tagName == "footer") {
         elements.push({ tagName, attributes, content });
+        
+      } else {
+        return;
       }
     });
 
