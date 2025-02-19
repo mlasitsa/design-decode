@@ -1,4 +1,4 @@
-buttonsData = 
+export default buttonsData = 
 [
     {
         buttonName: "Navigation Bar",
