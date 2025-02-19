@@ -69,3 +69,22 @@ Changed API to call deepseek, but ran into 402: Insuffecient funds
 At the moment they ran into an issue and you cant deposit any money,
 so I cant test my request. Waiting for Deepseek to restore service
 
+
+## Updates (02/18/2025)
+I think I came up with plan:
+**Will be using function calling**
+**Groq API - for faster responses due to low latency**
+**LangChain - for using AI memory so I can split data in chunks**
+
+In the **function calling** I might also use AI to revise my scraped and polished data
+to verify it and polish it more if its neccassry, maybe it will get rid of empty divs or other tags
+
+Instead of scraping everything I will give a user a choice to scrape:
+- Nav Bar
+- Header
+- Main Content
+- Footer
+
+Hopefully now I can finally start building and wont face any
+rate or memory limits
+
