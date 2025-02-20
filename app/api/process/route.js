@@ -2,18 +2,24 @@ import OpenAI from "openai";
 import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
+import Groq from "groq-sdk";
+
+
+
+const groq = new Groq({ apiKey: process.env.GROQ_API });
+
 
 dotenv.config();
 
-const openai = new OpenAI({  
-  baseURL: 'https://api.deepseek.com',
-  apiKey: process.env.DEEPSEEK_API 
-}); 
+// const openai = new OpenAI({  
+//   baseURL: 'https://api.deepseek.com',
+//   apiKey: process.env.DEEPSEEK_API 
+// }); 
 
 export async function POST(req) {
   try {
     // Step 1: Check if OpenAI API key is set
-    if (!process.env.DEEPSEEK_API) {
+    if (!process.env.GROQ_API) {
       return new Response(JSON.stringify({ error: "Missing OpenAI API key" }), { status: 500 });
     }
 
@@ -27,8 +33,8 @@ export async function POST(req) {
     const fileContent = fs.readFileSync(filePath, "utf8");
 
     // Step 3: Send request to OpenAI for conversion
-    const completion = await openai.chat.completions.create({
-      model: "deepseek-chat",
+    const completion = await groq.chat.completions.create({
+      model: "deepseek-r1-distill-qwen-32b",
       messages: [
         {
           role: "system",
