@@ -79,7 +79,7 @@ I think I came up with plan:
 In the **function calling** I might also use AI to revise my scraped and polished data
 to verify it and polish it more if its neccassry, maybe it will get rid of empty divs or other tags
 
-Instead of scraping everything I will give a user a choice to scrape:
+Instead of scraping everything I will give a user a choice to scrape: [DONE]
 - Nav Bar
 - Header
 - Main Content
