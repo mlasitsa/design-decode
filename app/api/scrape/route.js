@@ -5,17 +5,20 @@ import path from "path";
 
 export async function POST(req) {
   try {
-    const { link } = await req.json(); 
-    if (!link) return Response.json({ error: "Missing URL parameter" }, { status: 400 });
+    const { link, selectedTag } = await req.json(); 
+    if (!link || !selectedTag) return Response.json({ error: "Missing URL parameter" }, { status: 400 });
 
-    const elements = await preprocessHTML(link);
+    console.log(selectedTag)
+    const elements = await preprocessHTML(link, selectedTag);
 
     const filePath = path.join(process.cwd(), "public", "scraped_content.json");
 
     // Write data to a JSON file
     fs.writeFileSync(filePath, JSON.stringify(elements, null, 2));
 
-    return Response.json({ filePath }, { status: 200 });
+    return Response.json({ filePath, receivedTag: selectedTag}, { status: 200 });
+    
+
   } catch (error) {
     console.error("Error:", error);
     return Response.json({ error: "Something went wrong" }, { status: 500 });
@@ -41,6 +44,8 @@ async function preprocessHTML(url) {
   try {
     // Get HTML from Puppeteer
     const html = await scrapePage(url);
+    const tagSet = new Set(["nav", "footer", "header", "main"]);
+
 
     // Use Cheerio to parse HTML
     const $ = cheerio.load(html);
@@ -49,24 +54,25 @@ async function preprocessHTML(url) {
 
     // Extract all elements
     $('*').each((index, element) => {
-      const tagName = element.tagName;
-      const attributes = element.attribs; // Extract all attributes
-      const content = $(element).html()?.trim() || ''; // Extract inner content (if any)
-
-      // if tag name == link and rel == stylesheet, we push it ro cssLink since we need these link for styles
-      if (tagName == "link" && attributes.rel === "stylesheet") {
-        if (attributes.href) {
-          cssLink.push(attributes.href);
-        }     
-      } 
-        
-      else if (tagName == "body" || tagName == "nav" || tagName == "footer") {
+      const tagName = $(element).prop("tagName")?.toLowerCase().trim(); 
+      const attributes = element.attribs; 
+      const content = $(element).html()?.trim() || ''; 
+    
+      if (tagSet.has(tagName)) {
         elements.push({ tagName, attributes, content });
-        
-      } else {
-        return;
       }
+
+     // if tag name == link and rel == stylesheet, we push it ro cssLink since we need these link for styles
+      if (tagName == "link" && attributes.rel === "stylesheet") {
+          if (attributes.href) {
+           cssLink.push(attributes.href);
+          }     
+        } 
+      
+
     });
+      console.log("Extracted Elements Before Writing:", elements);
+    
 
     return elements; // Return the parsed elements
   } catch (error) {

@@ -1,13 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import radioButtonsData from "@/utils/radioButtonsData";
+import RadioButton from "@/components/RadioButton";
 
 export default function Main() {
   const [link, setLink] = useState("");
   const [loading, setLoading] = useState(false);
   const [responseData, setResponseData] = useState(null);
   const [processedData, setProcessedData] = useState(null);
+  const [selectedTag, setSelectedTag] = useState(null);
 
 
   const handleSubmit = async (e) => {
@@ -17,7 +20,7 @@ export default function Main() {
 
     try {
       // First API call: Scrape the page
-      const scrapeResponse = await axios.post(`/api/scrape`, { link });
+      const scrapeResponse = await axios.post(`/api/scrape`, { link, selectedTag: JSON.stringify(selectedTag) });
       console.log("Scraped Data:", scrapeResponse.data);
 
       if (!scrapeResponse.data || !scrapeResponse.data.filePath) {
@@ -45,16 +48,12 @@ export default function Main() {
     }
   };
 
-  const testOpenAi = async () => {
-    try {
-      const response = await axios.post("/api/process", {
-        message: "Hello, this is test",
-      });
-      console.log("Test OpenAI Response:", response.data);
-    } catch (error) {
-      console.error("OpenAI Test Error:", error);
+  useEffect(() => {
+    if (selectedTag !== null) {
+      console.log("Updated Selected Tag:", selectedTag);
     }
-  };
+  }, [selectedTag]);
+  
 
   return (
     <div className="max-w-sm mx-auto p-4">
@@ -76,6 +75,19 @@ export default function Main() {
             required
           />
         </div>
+
+        <div className="flex flex-col space-y-2">
+        {radioButtonsData.map((data) => (
+          <RadioButton
+            key={data.buttonName}
+            buttonName={data.buttonName}
+            tag={data.tag}
+            selected={JSON.stringify(selectedTag)}
+            onChange={(e) => setSelectedTag(JSON.parse(e.target.value))}
+          />
+        ))}
+        </div>
+
         <button
           type="submit"
           className="bg-blue-600 text-white px-4 py-2 rounded w-full"
@@ -83,6 +95,7 @@ export default function Main() {
         >
           {loading ? "Loading..." : "Get Design"}
         </button>
+
 
       </form>
       
@@ -93,13 +106,6 @@ export default function Main() {
           <pre className="text-sm">{processedData}</pre>
         </div>
       )}
-
-      <button
-        onClick={testOpenAi}
-        className="mt-4 bg-green-600 text-white px-4 py-2 rounded w-full"
-      >
-        Test OpenAI
-      </button>
     </div>
   );
 }
