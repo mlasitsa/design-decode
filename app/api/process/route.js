@@ -11,14 +11,13 @@ const chatModel = new ChatGroq({
   model: "deepseek-r1-distill-qwen-32b",
 });
 
-// ✅ Restore AI Memory
 const memory = new ConversationTokenBufferMemory({
   memoryKey: "chat_history",
   returnMessages: true,
 });
 
-const CHUNK_SIZE = 5000; // Adjusted to avoid exceeding token limit
-const SLEEP_TIME = 60000; // 60s per request (Groq rate limit)
+const CHUNK_SIZE = 5000; 
+const SLEEP_TIME = 60000; 
 
 export async function POST(req) {
   try {
@@ -41,7 +40,7 @@ export async function POST(req) {
       return new Response(JSON.stringify({ error: "No matching tag found" }), { status: 404 });
     }
 
-    // **Step 1: Send Metadata & Initialize Memory**
+    // Send Metadata & Initialize Memory
     console.log("📤 Sending Metadata...");
     await chatModel.invoke([
       { role: "system", content: "Forget all previous tasks. You are an AI that converts HTML into modular React (Next.js) components using Tailwind CSS. Use best practices, extract meaningful content, and avoid unnecessary elements." },
@@ -50,7 +49,7 @@ export async function POST(req) {
 
     await sleep(SLEEP_TIME);
 
-    // **Step 2: Send Content in Chunks (AI Memory Retains Context)**
+    // Send Content in Chunks (AI Memory DOES NOT Retains Context)
     const contentChunks = chunkString(filteredData[0].content, CHUNK_SIZE);
     console.log(`📤 Sending ${contentChunks.length} chunks...`);
 
@@ -62,7 +61,7 @@ export async function POST(req) {
       await sleep(SLEEP_TIME);
     }
 
-    // **Step 3: Final Request (Memory Retains Entire HTML)**
+    // Final step
     console.log("✅ Final request: Generating Next.js components...");
     const completion = await chatModel.invoke([
       { role: "user", content: "Now, based on all previous chunks and tag information, generate modular, reusable React (Next.js) components. Also please tell me how many messages I have sent" }
@@ -96,20 +95,20 @@ const processFileContent = (fileContent, userTag) => {
 };
 
 const chunkString = (str, size) => {
-  const words = str.split(" "); // Split at spaces (keeps words intact)
+  const words = str.split(" "); 
   let chunks = [];
   let currentChunk = "";
 
   for (let word of words) {
     if ((currentChunk + word).length > size) {
-      chunks.push(currentChunk.trim()); // Store full chunk
-      currentChunk = ""; // Start new chunk
+      chunks.push(currentChunk.trim()); 
+      currentChunk = "";
     }
     currentChunk += word + " ";
   }
 
   if (currentChunk.trim().length > 0) {
-    chunks.push(currentChunk.trim()); // Store last chunk
+    chunks.push(currentChunk.trim()); 
   }
 
   return chunks;
