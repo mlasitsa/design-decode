@@ -5,18 +5,17 @@ import path from "path";
 
 export async function POST(req) {
   try {
-    const { link, selectedTag } = await req.json(); 
-    if (!link || !selectedTag) return Response.json({ error: "Missing URL parameter" }, { status: 400 });
+    const { link } = await req.json(); 
+    if (!link) return Response.json({ error: "Missing URL parameter" }, { status: 400 });
 
-    console.log(selectedTag)
-    const elements = await preprocessHTML(link, selectedTag);
+    const elements = await preprocessHTML(link);
 
     const filePath = path.join(process.cwd(), "public", "scraped_content.json");
 
     // Write data to a JSON file
     fs.writeFileSync(filePath, JSON.stringify(elements, null, 2));
 
-    return Response.json({ filePath, receivedTag: selectedTag}, { status: 200 });
+    return Response.json({ filePath }, { status: 200 });
     
 
   } catch (error) {

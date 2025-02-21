@@ -33,6 +33,7 @@ export default function Main() {
       // Second API call: Process the scraped data with AI
       const processResponse = await axios.post("/api/process", {
         filePath: scrapeResponse.data.filePath,
+        userTag: selectedTag,
       });
 
       if (!processResponse.data || !processResponse.data.components) {
