@@ -8,7 +8,7 @@ import Link from "next/link";
 
 function Hero() {
   const [titleNumber, setTitleNumber] = useState(0);
-  const titles = useMemo(() => ["amazing", "new", "wonderful", "beautiful", "smart"], []);
+  const titles = useMemo(() => ["extract", "convert", "build", "ship", "optimize", "eutomate"], []);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -33,7 +33,7 @@ function Hero() {
           {/* Animated Title */}
           <div className="flex flex-col gap-4 max-w-[90%] sm:max-w-2xl">
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-regular tracking-tighter">
-              <span className="text-spektr-cyan-50">This is something</span>
+              <span className="text-spektr-cyan-50">Automate Your Frontend Workflow</span>
               <span className="relative flex w-full justify-center overflow-hidden md:pb-4 md:pt-1 min-h-[50px]">
                 &nbsp;
                 {titles.map((title, index) => (
@@ -56,18 +56,21 @@ function Hero() {
 
             {/* Subtext */}
             <p className="text-base sm:text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-[90%] sm:max-w-2xl">
-              Managing a small business today is already tough. Avoid further complications by ditching outdated, tedious trade methods. Our goal is to streamline SMB trade, making it easier and faster than ever.
-            </p>
+            Stop manually inspecting web pages for UI inspiration. Our AI-powered tool <strong>scrapes website designs</strong>, extracts their structure, and converts them into <strong>fully-styled Tailwind components</strong>—all in seconds. <br /> No more messy HTML & CSS, just <strong>clean, reusable code</strong> at your fingertips.</p>
           </div>
 
           {/* CTA Buttons - Responsive Layout */}
           <div className="flex flex-col sm:flex-row gap-3 w-full max-w-[90%] sm:max-w-none justify-center">
-            <Button size="lg" className="gap-4 w-full sm:w-auto" variant="outline">
-              Jump on a call <PhoneCall className="w-4 h-4" />
-            </Button>
-            <Button size="lg" className="gap-4 w-full sm:w-auto">
-              Sign up here <MoveRight className="w-4 h-4" />
-            </Button>
+            <Link href='/call'>
+              <Button size="lg" className="gap-4 w-full sm:w-auto" variant="outline">
+                Jump on a call <PhoneCall className="w-4 h-4" />
+              </Button>
+            </Link>
+            <Link href="/main">
+              <Button size="lg" className="gap-4 w-full sm:w-auto">
+                Sign up here <MoveRight className="w-4 h-4" />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
