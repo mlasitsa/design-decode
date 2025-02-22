@@ -10,7 +10,7 @@ import {
   IconTerminal2,
 } from "@tabler/icons-react";
 
-export function FeaturesSectionWithHoverEffects() {
+export function Cards() {
   const features = [
     {
       title: "Built for developers",

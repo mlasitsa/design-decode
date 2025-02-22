@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import radioButtonsData from "@/utils/radioButtonsData";
 import RadioButton from "@/components/RadioButton";
+import GooeyText from "@/components/ui/gooey-text-morphing";
 
 export default function Main() {
   const [link, setLink] = useState("");
@@ -58,6 +59,7 @@ export default function Main() {
 
   return (
     <div className="max-w-sm mx-auto p-4">
+      <GooeyText texts={["Let", "AI", "to", "take", "care", "of", "your", "design"]} />
       <form onSubmit={handleSubmit}>
         <div className="mb-5">
           <label

@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/tooltip"
 import { Facebook, Instagram, Linkedin, Moon, Send, Sun, Twitter } from "lucide-react"
 
-function Footerdemo() {
+function Footer() {
   const [isDarkMode, setIsDarkMode] = React.useState(true)
   const [isChatOpen, setIsChatOpen] = React.useState(false)
 
@@ -167,4 +167,4 @@ function Footerdemo() {
   );
 }
 
-export { Footerdemo }
+export default Footer;

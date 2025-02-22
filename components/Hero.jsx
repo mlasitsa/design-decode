@@ -8,7 +8,7 @@ import Link from "next/link";
 
 function Hero() {
   const [titleNumber, setTitleNumber] = useState(0);
-  const titles = useMemo(() => ["extract", "convert", "build", "ship", "optimize", "eutomate"], []);
+  const titles = useMemo(() => ["extract", "convert", "build", "ship", "optimize", "automate"], []);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
