@@ -13,6 +13,13 @@ export default function Main() {
   const [responseData, setResponseData] = useState(null);
   const [processedData, setProcessedData] = useState(null);
   const [selectedTag, setSelectedTag] = useState(null);
+  const H1text = `
+  As of right now our <strong>AI Bot</strong> takes some time to process content and generate outputs. 
+  <strong>Also, as real human our AI friend isn't perfect yet and still can make mistake, 
+  so please don't be too harsh.</strong> Meanwhile, try to play with it by pasting the link 
+  in the input field, <strong>select part of the website</strong> you need to get 
+  scraped and simply sit back and <strong>let our AI handle boring work for you!!!</strong>
+`
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,7 +71,7 @@ export default function Main() {
         <Typewriter text={"Just sit back and let AI to take care of it"}/>
         </span>
         <span className="text-white-600">
-          <Description text={"As of right now our AI Bot takes some time to process content and generate outputs. Also, as real human our AI friend isnt perfect yet and still can make mistake, so please dont be too harsh. Meanwhile, try to play with it by pasting the link in the input field, select part of the website you need to get scraped and simply sit back and let our AI to handle boring work for you!!!"}/>
+          <Description text={H1text}/>
         </span>
       </div>
 
@@ -117,12 +124,18 @@ export default function Main() {
 
       {/* Processed Data Output */}
       {processedData && (
-        <div className="mt-6 w-full max-w-2xl bg-gray-100 border border-gray-300 rounded-lg p-4">
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">
-            Generated Next.js Components:
-          </h3>
-          <pre className="bg-white p-3 text-gray-700 text-sm rounded-md overflow-x-auto">
-            {processedData}
+        <div className="mt-8 w-full max-w-2xl bg-gray-900 text-gray-100 border border-gray-700 rounded-lg p-5 shadow-lg">
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-lg font-semibold text-white">Generated Next.js Components:</h3>
+            <button
+              onClick={() => navigator.clipboard.writeText(processedData)}
+              className="text-sm bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-md transition"
+            >
+              Copy
+            </button>
+          </div>
+          <pre className="bg-gray-800 p-4 text-sm rounded-md overflow-x-auto max-h-72">
+            <code className="whitespace-pre-wrap break-words">{processedData}</code>
           </pre>
         </div>
       )}

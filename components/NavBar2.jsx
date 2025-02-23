@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation"; // Get current page path
 import { cn } from "@/lib/utils";
 
 const items = [
@@ -10,8 +11,16 @@ const items = [
 ];
 
 export function NavBar2({ className }) {
+  const pathname = usePathname(); 
   const [activeTab, setActiveTab] = useState(items[0].name);
   const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const currentTab = items.find((item) => item.href === pathname);
+    if (currentTab) {
+      setActiveTab(currentTab.name);
+    }
+  }, [pathname]);
 
   useEffect(() => {
     const handleResize = () => {
