@@ -20,7 +20,7 @@ const RadioButton = ({ buttonName, tag, selected, onChange }) => {
           <div className="w-2.5 h-2.5 bg-blue-500 rounded-full"></div>
         )}
       </div>
-      <span className="text-gray-700">{buttonName}</span>
+      <span className="text-white-700">{buttonName}</span>
     </label>
   );
 };

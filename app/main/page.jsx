@@ -68,7 +68,9 @@ export default function Main() {
       {/* Header */}
       <div className="flex flex-col items-center gap-5 mt-16">
         <span className="inline-block text-white-600 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-center">
-        <Typewriter text={"Just sit back and let AI to take care of it"}/>
+          Just sit back and let AI to {""}
+          <br/>
+        <Typewriter text={["process it", "generate it", "take care of it"]}/>
         </span>
         <span className="text-white-600">
           <Description text={H1text}/>
@@ -82,7 +84,7 @@ export default function Main() {
           <div>
             <label
               htmlFor="link"
-              className="block text-sm font-semibold text-gray-700"
+              className="block text-sm font-semibold text-white-700"
             >
               Enter Website Link
             </label>
@@ -99,7 +101,7 @@ export default function Main() {
 
           {/* Radio Buttons */}
           <div className="space-y-3">
-            <p className="text-sm font-medium text-gray-700">Select a Tag:</p>
+            <p className="text-sm font-medium text-white-700">Select a Tag:</p>
             {radioButtonsData.map((data) => (
               <RadioButton
                 key={data.buttonName}
