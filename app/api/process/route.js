@@ -2,10 +2,12 @@ import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
 import { ChatGroq } from "@langchain/groq";
+import { ConversationChain } from "langchain/chains";
 import { ConversationTokenBufferMemory } from "langchain/memory";
 
 dotenv.config();
 
+export async function POST(req) {
 const chatModel = new ChatGroq({
   apiKey: process.env.GROQ_API,
   model: "deepseek-r1-distill-qwen-32b",
@@ -16,10 +18,11 @@ const memory = new ConversationTokenBufferMemory({
   returnMessages: true,
 });
 
+
 const CHUNK_SIZE = 5000; 
 const SLEEP_TIME = 60000; 
 
-export async function POST(req) {
+
   try {
     const { userTag } = await req.json();
     if (!userTag) return Response.json({ error: "Missing userTag parameter" }, { status: 400 });
@@ -100,6 +103,7 @@ const chunkString = (str, size) => {
   let currentChunk = "";
 
   for (let word of words) {
+    word.replace(/\s+/g, " ");
     if ((currentChunk + word).length > size) {
       chunks.push(currentChunk.trim()); 
       currentChunk = "";
