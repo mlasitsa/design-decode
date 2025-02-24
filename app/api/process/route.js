@@ -4,23 +4,25 @@ import dotenv from "dotenv";
 import { ChatGroq } from "@langchain/groq";
 import { ConversationChain } from "langchain/chains";
 import { ConversationTokenBufferMemory } from "langchain/memory";
+import { ChatOpenAI } from "@langchain/openai";
 
 dotenv.config();
 
 export async function POST(req) {
-const chatModel = new ChatGroq({
-  apiKey: process.env.GROQ_API,
-  model: "deepseek-r1-distill-qwen-32b",
+
+  const chatModel = new ChatOpenAI({
+  apiKey: process.env.GPT4API,
+  model: "gpt-4o-mini",
 });
 
-const memory = new ConversationTokenBufferMemory({
-  memoryKey: "chat_history",
-  returnMessages: true,
-});
+// const memory = new ConversationTokenBufferMemory({
+//   memoryKey: "chat_history",
+//   returnMessages: true,
+// });
 
 
-const CHUNK_SIZE = 5000; 
-const SLEEP_TIME = 60000; 
+// const CHUNK_SIZE = 5000; 
+// const SLEEP_TIME = 60000; 
 
 
   try {
@@ -45,32 +47,40 @@ const SLEEP_TIME = 60000;
 
     // Send Metadata & Initialize Memory
     console.log("📤 Sending Metadata...");
-    await chatModel.invoke([
-      { role: "system", content: "Forget all previous tasks. You are an AI that converts HTML into modular React (Next.js) components using Tailwind CSS. Use best practices, extract meaningful content, and avoid unnecessary elements." },
-      { role: "user", content: `Tag: ${filteredData[0].tagName}\nAttributes: ${JSON.stringify(filteredData[0].attributes, null, 2)}` }
-    ], { memory });
+    const completion = await chatModel.invoke([
+      { 
+        role: "system", 
+        content: "Forget all previous tasks. You are an AI that converts HTML into modular React (Next.js) components using Tailwind CSS. Use best practices, extract meaningful content, and avoid unnecessary elements."
+      },
 
-    await sleep(SLEEP_TIME);
+      { role: "user",
+         content: `Tag: ${filteredData[0].tagName}\nAttributes: ${JSON.stringify(filteredData[0].attributes, null, 2)}\nHTML: ${filteredData} \n Action:
+      Now, based on all html and tag information, generate modular, reusable React (Next.js) components. At the very end, provide output of what I have sent` 
+      }
+    ]);
 
-    // Send Content in Chunks (AI Memory DOES NOT Retains Context)
-    const contentChunks = chunkString(filteredData[0].content, CHUNK_SIZE);
-    console.log(`📤 Sending ${contentChunks.length} chunks...`);
+    // await sleep(SLEEP_TIME);
 
-    for (let i = 0; i < contentChunks.length; i++) {
-      console.log(`📤 Sending Part ${i + 1} of ${contentChunks.length}...`);
-      await chatModel.invoke([
-        { role: "user", content: `Part ${i + 1}:\n${contentChunks[i]}\n\nThis is part of the HTML. More parts are coming.` }
-      ], { memory });
-      await sleep(SLEEP_TIME);
-    }
+    // // Send Content in Chunks (AI Memory DOES NOT Retains Context)
+    // const contentChunks = chunkString(filteredData[0].content, CHUNK_SIZE);
+    // console.log(`📤 Sending ${contentChunks.length} chunks...`);
+
+    // for (let i = 0; i < contentChunks.length; i++) {
+    //   console.log(`📤 Sending Part ${i + 1} of ${contentChunks.length}...`);
+    //   await chatModel.invoke([
+    //     { role: "user", content: `Part ${i + 1}:\n${contentChunks[i]}\n\nThis is part of the HTML. More parts are coming.` }
+    //   ], { memory });
+    //   await sleep(SLEEP_TIME);
+    // }
+
 
     // Final step
-    console.log("✅ Final request: Generating Next.js components...");
-    const completion = await chatModel.invoke([
-      { role: "user", content: "Now, based on all previous chunks and tag information, generate modular, reusable React (Next.js) components. Also please tell me how many messages I have sent" }
-    ], { memory });
+    // console.log("✅ Final request: Generating Next.js components...");
+    // const completion = await chatModel.invoke([
+    //   { role: "user", content: "Now, based on all previous chunks and tag information, generate modular, reusable React (Next.js) components. Also please tell me how many messages I have sent" }
+    // ], { memory });
 
-    console.log("📢 Groq API Response:", JSON.stringify(completion, null, 2));
+    console.log("📢 Open AI API Response:", JSON.stringify(completion, null, 2));
 
     // Check if the response is valid
     if (!completion) {
