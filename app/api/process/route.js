@@ -47,6 +47,9 @@ export async function POST(req) {
 
     // Send Metadata & Initialize Memory
     console.log("📤 Sending Metadata...");
+    console.log("Your tag is:", userTag);
+    console.log("Your elements are:", filteredData);
+    
     const completion = await chatModel.invoke([
       { 
         role: "system", 
@@ -54,7 +57,7 @@ export async function POST(req) {
       },
 
       { role: "user",
-         content: `Tag: ${filteredData[0].tagName}\nAttributes: ${JSON.stringify(filteredData[0].attributes, null, 2)}\nHTML: ${filteredData} \n Action:
+         content: `Tag: ${filteredData[0].tagName}\nAttributes: ${JSON.stringify(filteredData[0].attributes, null, 2)}\nHTML: ${filteredData.content} \n Action:
       Now, based on all html and tag information, generate modular, reusable React (Next.js) components. At the very end, provide output of what I have sent` 
       }
     ]);

@@ -72,9 +72,9 @@ so I cant test my request. Waiting for Deepseek to restore service
 
 ## Updates (02/18/2025)
 I think I came up with plan:
-**Will be using function calling**
-**Groq API - for faster responses due to low latency**
-**LangChain - for using AI memory so I can split data in chunks**
+**Will be using function calling** [IN THE FUTURE]
+**Groq API - for faster responses due to low latency** [DONE]
+**LangChain - for using AI memory so I can split data in chunks** [DONE, BUT WITH SOME ISSUES]
 
 In the **function calling** I might also use AI to revise my scraped and polished data
 to verify it and polish it more if its neccassry, maybe it will get rid of empty divs or other tags
@@ -87,4 +87,16 @@ Instead of scraping everything I will give a user a choice to scrape: [DONE]
 
 Hopefully now I can finally start building and wont face any
 rate or memory limits
+
+## Updates (02/24/2025)
+At the moment I have two branches:
+**Main** uses Groq API
+- As a downside, I am not sure if Groq supports all of the features OpenAI has through LangChain. For example, I tried to use TokenBufferMemory, but hit TPM limit since it send previous chunk with incoming and other ConversationChain did't work (Maybe I implemented it wrong)
+
+**vector-databse** uses Open AI API for now:
+- As a downside, I might eventually hit token limit since my tier is 1, but for full production even this way might work. I want to try to play with it and see how accurate it returns small elements. As of now I dont have a feture that parses .css files content. I will need to think how can I manage it properly. 
+
+**new-test-branch** maybe will be created for creating vector db, so I can keep other branches. I will adjust as I go
+
+**Groq-API** will be created to still have a reference to working via Groq API (but not might a good fit), I will use Groq for making AI voice assistant in my next project
 
