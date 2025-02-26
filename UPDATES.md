@@ -100,3 +100,17 @@ At the moment I have two branches:
 
 **Groq-API** will be created to still have a reference to working via Groq API (but not might a good fit), I will use Groq for making AI voice assistant in my next project
 
+
+## Updates (02/25/2025)
+
+Currently trying to build a logic to scrape neccessary css style based of classes of the elements I want to generate a resulable component for
+
+Plan: 
+- When I scrape I also have array that accepts links that reference .css stylesheets
+- Also once user chose element I would need to go through this element and exctract into object in a format of:
+tag:
+class:
+- Then I need to have another cherio scraping that would look through every .css style sheet references link and will get the styles I need
+- Send everything to AI model for final processing
+
+

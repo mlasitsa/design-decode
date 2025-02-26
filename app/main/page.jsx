@@ -56,6 +56,15 @@ export default function Main() {
     }
   };
 
+  const scrapeLink = async (link) => { 
+    try {
+      const scrapeResponse = await axios.post(`/api/scrape-css`, {link});
+      console.log(scrapeResponse);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+  
   useEffect(() => {
     if (selectedTag !== null) {
       console.log("Updated Selected Tag:", selectedTag);
@@ -111,6 +120,17 @@ export default function Main() {
                 onChange={(e) => setSelectedTag(JSON.parse(e.target.value))}
               />
             ))}
+          </div>
+
+          <div>
+            <p className="text-sm font-medium text-white-700">THIS IS TEST CSS BUTTON</p>
+            <button 
+              className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition"
+              onClick={() => scrapeLink(link)}
+              >
+            
+              Test Button
+            </button>
           </div>
 
           {/* Submit Button */}
