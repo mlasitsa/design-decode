@@ -113,4 +113,6 @@ class:
 - Then I need to have another cherio scraping that would look through every .css style sheet references link and will get the styles I need
 - Send everything to AI model for final processing
 
+(But before take action I need to check if I can extract CSS files directly from browser using JS)
+
 
