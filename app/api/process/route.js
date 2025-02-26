@@ -40,6 +40,7 @@ export async function POST(req) {
 
     const fileContent = fs.readFileSync(filePath, "utf8");
     const filteredData = processFileContent(fileContent, userTag);
+    filteredData.replace(/\s+/g, '');
 
     if (filteredData.length === 0) {
       return new Response(JSON.stringify({ error: "No matching tag found" }), { status: 404 });
@@ -56,9 +57,11 @@ export async function POST(req) {
         content: "Forget all previous tasks. You are an AI that converts HTML into modular React (Next.js) components using Tailwind CSS. Use best practices, extract meaningful content, and avoid unnecessary elements."
       },
 
-      { role: "user",
-         content: `Tag: ${filteredData[0].tagName}\nAttributes: ${JSON.stringify(filteredData[0].attributes, null, 2)}\nHTML: ${filteredData.content} \n Action:
-      Now, based on all html and tag information, generate modular, reusable React (Next.js) components. At the very end, provide output of what I have sent` 
+      { 
+        role: "user",
+      //    content: `Tag: ${filteredData[0].tagName}\nAttributes: ${JSON.stringify(filteredData[0].attributes, null, 2)}\nHTML: ${filteredData.content} \n Action:
+      // Now, based on all html and tag information, generate modular, reusable React (Next.js) components. At the very end, provide output of what I have sent` 
+        content: `This is the data you need to work with: ${filteredData[0].content}. And this is the tag you need to work with: ${filteredData[0].tagName}`
       }
     ]);
 
