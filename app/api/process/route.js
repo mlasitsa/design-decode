@@ -26,10 +26,10 @@ export async function POST(req) {
 
 
   try {
-    const { userTag } = await req.json();
-    if (!userTag) return Response.json({ error: "Missing userTag parameter" }, { status: 400 });
+    const { userTag, cssData } = await req.json();
+    if (!userTag || !cssData) return Response.json({ error: "Missing userTag parameter" }, { status: 400 });
 
-    if (!process.env.GROQ_API) {
+    if (!process.env.GPT4API) {
       return new Response(JSON.stringify({ error: "Missing Groq API key" }), { status: 500 });
     }
 
@@ -61,7 +61,7 @@ export async function POST(req) {
         role: "user",
       //    content: `Tag: ${filteredData[0].tagName}\nAttributes: ${JSON.stringify(filteredData[0].attributes, null, 2)}\nHTML: ${filteredData.content} \n Action:
       // Now, based on all html and tag information, generate modular, reusable React (Next.js) components. At the very end, provide output of what I have sent` 
-        content: `This is the data you need to work with: ${filteredData[0].content}. And this is the tag you need to work with: ${filteredData[0].tagName}`
+        content: `This is the data you need to work with: ${filteredData[0].content}. And this is the tag you need to work with: ${filteredData[0].tagName} and this is the stylesheet references of the items that are used in this html elements: ${cssData}`
       }
     ]);
 

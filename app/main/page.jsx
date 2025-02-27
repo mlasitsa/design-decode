@@ -33,18 +33,36 @@ export default function Main() {
       });
 
       if (!scrapeResponse.data || !scrapeResponse.data.filePath) {
+        console.log('I FAILED ON STEP 1')
         return;
       }
 
       setResponseData(scrapeResponse.data);
+      const { cssLinks, elements } = scrapeResponse.data
 
-      // Second API call: Process the scraped data with AI
+      // Second API call: Get CSS id and css classes styles
+      const cssStyle = await axios.post("/api/scrape-css", {
+        link: link,
+        cssLinks: cssLinks,
+        userTag: selectedTag,
+        htmlData: elements
+      })
+
+      if (!cssStyle.data) {
+        console.log("I FAILED ON STEP 2")
+      }
+
+      const finalCss = cssStyle.data
+
+      // Final API call: Process the scraped data with AI
       const processResponse = await axios.post("/api/process", {
         filePath: scrapeResponse.data.filePath,
         userTag: selectedTag,
+        cssData: finalCss
       });
 
       if (!processResponse.data || !processResponse.data.components) {
+        console.log('DATA ISNT THERE')
         return;
       }
 
@@ -64,7 +82,7 @@ export default function Main() {
       console.error("Error:", error);
     }
   }
-  
+
   useEffect(() => {
     if (selectedTag !== null) {
       console.log("Updated Selected Tag:", selectedTag);
@@ -122,7 +140,7 @@ export default function Main() {
             ))}
           </div>
 
-          <div>
+          {/* <div>
             <p className="text-sm font-medium text-white-700">THIS IS TEST CSS BUTTON</p>
             <button 
               className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition"
@@ -131,7 +149,7 @@ export default function Main() {
             
               Test Button
             </button>
-          </div>
+          </div> */}
 
           {/* Submit Button */}
           <button

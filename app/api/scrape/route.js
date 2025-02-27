@@ -8,15 +8,16 @@ export async function POST(req) {
     const { link } = await req.json(); 
     if (!link) return Response.json({ error: "Missing URL parameter" }, { status: 400 });
 
-    const elements = await preprocessHTML(link);
+    // Scrape HTML and extract elements + CSS links
+    const { elements, cssLinks, } = await preprocessHTML(link);
 
     const filePath = path.join(process.cwd(), "public", "scraped_content.json");
 
-    // Write data to a JSON file
+    // ✅ Write extracted elements to JSON file
     fs.writeFileSync(filePath, JSON.stringify(elements, null, 2));
 
-    return Response.json({ filePath }, { status: 200 });
-    
+    // ✅ Return both `filePath`, `elements`, and `cssLink`
+    return Response.json({ filePath, cssLinks, elements }, { status: 200 });
 
   } catch (error) {
     console.error("Error:", error);
@@ -45,14 +46,13 @@ async function preprocessHTML(url) {
     const html = await scrapePage(url);
     const tagSet = new Set(["nav", "footer", "header", "main"]);
 
-
     // Use Cheerio to parse HTML
     const $ = cheerio.load(html);
     const elements = [];
     const cssLink = [];
 
     // Extract all elements
-    $('*').each((index, element) => {
+    $("*").each((index, element) => {
       const tagName = $(element).prop("tagName")?.toLowerCase().trim(); 
       const attributes = element.attribs; 
       const content = $(element).html()?.trim() || ''; 
@@ -61,22 +61,18 @@ async function preprocessHTML(url) {
         elements.push({ tagName, attributes, content });
       }
 
-     // if tag name == link and rel == stylesheet, we push it ro cssLink since we need these link for styles
-      if (tagName == "link" && attributes.rel === "stylesheet") {
-          if (attributes.href) {
-           cssLink.push(attributes.href);
-          }     
-        } 
-      
-
+      // ✅ Extract referenced CSS stylesheets
+      if (tagName === "link" && attributes.rel === "stylesheet" && attributes.href) {
+        cssLink.push(attributes.href);
+      }
     });
-      console.log("Extracted Elements Before Writing:", elements);
-    
 
-    return elements; // Return the parsed elements
+    console.log("Extracted Elements:", elements);
+    console.log("Extracted CSS Links:", cssLink);
+
+    return { elements, cssLink }; // ✅ Now returning both
   } catch (error) {
-    console.error('Error in preprocessing:', error);
-    throw error; 
+    console.error("Error in preprocessing:", error);
+    throw error;
+  }
 }
-}
-
