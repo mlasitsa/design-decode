@@ -24,6 +24,7 @@ export default function Main() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setProcessedData(null)
 
     try {
       // First API call: Scrape the page
@@ -38,6 +39,7 @@ export default function Main() {
       }
 
       setResponseData(scrapeResponse.data);
+      console.log("RECEIVED FROM CALL:", scrapeResponse.data)
       const { cssLinks, elements } = scrapeResponse.data
 
       // Second API call: Get CSS id and css classes styles
@@ -48,11 +50,12 @@ export default function Main() {
         htmlData: elements
       })
 
-      if (!cssStyle.data) {
-        console.log("I FAILED ON STEP 2")
+      if (!cssStyle.data || !cssStyle.data.extractedStyles) {
+        console.log("I FAILED ON STEP 2");
+        return;  // Stop execution if there's an error
       }
 
-      const finalCss = cssStyle.data
+      const finalCss = cssStyle.data.extractedStyles
 
       // Final API call: Process the scraped data with AI
       const processResponse = await axios.post("/api/process", {
@@ -73,15 +76,6 @@ export default function Main() {
       setLoading(false);
     }
   };
-
-  const scrapeLink = async (link) => { 
-    try {
-      const scrapeResponse = await axios.post(`/api/scrape-css`, {link});
-      console.log(scrapeResponse);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }
 
   useEffect(() => {
     if (selectedTag !== null) {

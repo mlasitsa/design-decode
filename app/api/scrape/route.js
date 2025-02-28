@@ -9,7 +9,10 @@ export async function POST(req) {
     if (!link) return Response.json({ error: "Missing URL parameter" }, { status: 400 });
 
     // Scrape HTML and extract elements + CSS links
-    const { elements, cssLinks, } = await preprocessHTML(link);
+    const { elements, cssLinks } = await preprocessHTML(link);
+
+    console.log("Extracted CSS Links:", cssLinks);
+    console.log("extracted elements are:", elements)
 
     const filePath = path.join(process.cwd(), "public", "scraped_content.json");
 
@@ -49,7 +52,7 @@ async function preprocessHTML(url) {
     // Use Cheerio to parse HTML
     const $ = cheerio.load(html);
     const elements = [];
-    const cssLink = [];
+    const cssLinks = [];
 
     // Extract all elements
     $("*").each((index, element) => {
@@ -61,16 +64,14 @@ async function preprocessHTML(url) {
         elements.push({ tagName, attributes, content });
       }
 
-      // ✅ Extract referenced CSS stylesheets
       if (tagName === "link" && attributes.rel === "stylesheet" && attributes.href) {
-        cssLink.push(attributes.href);
+        cssLinks.push(attributes.href);
       }
     });
 
     console.log("Extracted Elements:", elements);
-    console.log("Extracted CSS Links:", cssLink);
 
-    return { elements, cssLink }; // ✅ Now returning both
+    return { elements, cssLinks }; 
   } catch (error) {
     console.error("Error in preprocessing:", error);
     throw error;

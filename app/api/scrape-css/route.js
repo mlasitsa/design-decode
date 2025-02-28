@@ -1,5 +1,7 @@
 import { CheerioWebBaseLoader } from "@langchain/community/document_loaders/web/cheerio";
 import postcss from "postcss";
+import * as cheerio from "cheerio";
+
 
 export async function POST(req) {
     try {
@@ -56,19 +58,42 @@ function getRootDomain(url) {
 }
 
 // Extract classes & IDs from htmlData based on userTag
-function extractCssElements(userTag, htmlData) {
-    let cssElements = [];
-    
-    if (htmlData.tagName === userTag) {
-        if (htmlData.attributes?.id) {
-            cssElements.push(`#${htmlData.attributes.id}`);
-        }
-        if (htmlData.attributes?.class) {
-            cssElements = cssElements.concat(
-                htmlData.attributes.class.split(" ").map(cls => `.${cls}`)
-            );
-        }
-    }
+function extractCssElements(userTag, htmlDataArray) {
+  let cssElements = [];
 
-    return cssElements;
+  // Filter the array to find objects that match the userTag
+  const matchingElements = htmlDataArray.filter(element => element.tagName === userTag);
+
+  // Loop through all matched elements
+  matchingElements.forEach(htmlData => {
+      // Extract from the main tag
+      if (htmlData.attributes?.id) {
+          cssElements.push(`#${htmlData.attributes.id}`);
+      }
+      if (htmlData.attributes?.class) {
+          cssElements = cssElements.concat(
+              htmlData.attributes.class.split(" ").map(cls => `.${cls}`)
+          );
+      }
+
+      // Parse inner HTML content with Cheerio
+      if (htmlData.content) {
+          const $ = cheerio.load(htmlData.content); // Load raw HTML content
+          $("*").each((_, element) => {
+              const tagId = $(element).attr("id");
+              const tagClass = $(element).attr("class");
+
+              if (tagId) cssElements.push(`#${tagId}`);
+              if (tagClass) {
+                  cssElements = cssElements.concat(tagClass.split(" ").map(cls => `.${cls}`));
+              }
+          });
+      }
+  });
+
+  // Remove duplicates
+  cssElements = [...new Set(cssElements)];
+
+  console.log("CSS ELEMENTS FROM EXTRACT ARE:", cssElements);
+  return cssElements;
 }
