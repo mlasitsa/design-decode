@@ -123,7 +123,7 @@ const handleClickCopy = () => {
               id="link"
               value={link}
               onChange={(e) => setLink(e.target.value)}
-              className="mt-1 w-full p-3 border rounded-md focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 w-full p-3 border rounded-md focus:ring-blue-500 focus:border-blue-500 text-black"
               placeholder="https://example.com"
               required
             />
