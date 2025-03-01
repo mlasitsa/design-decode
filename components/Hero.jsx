@@ -61,9 +61,9 @@ function Hero() {
 
           {/* CTA Buttons - Responsive Layout */}
           <div className="flex flex-col sm:flex-row gap-3 w-full max-w-[90%] sm:max-w-none justify-center">
-            <Link href='/call'>
+            <Link href='/test-component'>
               <Button size="lg" className="gap-4 w-full sm:w-auto" variant="outline">
-                Jump on a call <PhoneCall className="w-4 h-4" />
+                Test Component <PhoneCall className="w-4 h-4" />
               </Button>
             </Link>
             <Link href="/main">
