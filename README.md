@@ -1,4 +1,17 @@
-## SUBJECT TO CHANGE ON TECH STACK
+## FINAL TECH STACK (NO VECTOR DB FOR NOW)
+**Front-end:**
+- **Next.js** – React framework for SSR & static generation.
+- **JavaScript** – Primary language for the frontend.
+- **Tailwind CSS** – Utility-first CSS framework for styling.
+- **Framer Motion** – Animation library for smooth UI interactions.
+
+Back-end & Processing:
+- **OpenAI API** – Likely used for AI-driven HTML/CSS conversion.
+- **Node.js** – Handles server-side operations.
+- **Cheerio** – Parses and extracts HTML elements.
+- **Puppeteer** – Automates browser tasks for scraping.
+- **LangChain** – Framework for structured LLM responses (if used).
+- **PostCSS** – Used on the backend to extract and process styles from scraped HTML.
 
 # ScrapeIt
 
@@ -10,14 +23,11 @@ ScrapeIt is a project aimed at enhancing the efficiency of front-end development
 - **AI-Powered Enhancements**: Leverage Hugging Face API and other AI models to intelligently process and generate component structures.
 - **Focus on Reusability**: Output reusable components with meaningful class names, enabling consistent and maintainable front-end development.
 
-## Tech Stack
-- **JavaScript**: Core language for Puppeteer and Cheerio for web scraping.
-- **Python**: Used for integrating and fine-tuning AI models.
-- **Node.js**: Backend server to handle scraping and processing workflows.
-- **Tailwind CSS**: Styling framework for generating clean, responsive designs.
-- **Hugging Face API**: Provides the AI-powered models to analyze and convert design data.
 
-## Current Exploration (Might be changed)
+
+## Past Notes
+
+### Current Exploration (Might be changed)
 - Fine-tuning the [CodeT5 model](https://huggingface.co/Salesforce/codet5) for HTML-to-component conversion. (approach will be changed)
 - Exploring efficient ways to handle limited local storage by utilizing cloud-based solutions or lightweight models.
 - Investigating alternatives to improve model outputs for generating accurate and reusable Next.js components.

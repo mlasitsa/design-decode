@@ -115,4 +115,7 @@ class:
 
 (But before take action I need to check if I can extract CSS files directly from browser using JS)
 
+## Updates (02/28/2025)
 
+App works, converst into pretty accureate component, but tested with small data like footer for now
+If people will see value in it -> I will make it better an more accurate
