@@ -13,6 +13,7 @@ export default function Main() {
   const [responseData, setResponseData] = useState(null);
   const [processedData, setProcessedData] = useState(null);
   const [selectedTag, setSelectedTag] = useState(null);
+  const [onCopyClick, setOnCopyClick] = useState("Copy")
   const H1text = `
   As of right now our <strong>AI Bot</strong> takes some time to process content and generate outputs. 
   <strong>Also, as real human our AI friend isn't perfect yet and still can make mistake, 
@@ -20,6 +21,14 @@ export default function Main() {
   in the input field, <strong>select part of the website</strong> you need to get 
   scraped and simply sit back and <strong>let our AI handle boring work for you!!!</strong>
 `
+const handleClickCopy = () => {
+  navigator.clipboard.writeText(processedData);
+  setOnCopyClick("Copied");
+
+  setTimeout(() => {
+      setOnCopyClick("Copy");
+  }, 2000);
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -162,10 +171,10 @@ export default function Main() {
           <div className="flex justify-between items-center mb-3">
             <h3 className="text-lg font-semibold text-white">Generated Next.js Components:</h3>
             <button
-              onClick={() => navigator.clipboard.writeText(processedData)}
+              onClick={handleClickCopy}
               className="text-sm bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-md transition"
             >
-              Copy
+              {onCopyClick}
             </button>
           </div>
           <pre className="bg-gray-800 p-4 text-sm rounded-md overflow-x-auto max-h-72">

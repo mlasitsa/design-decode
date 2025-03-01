@@ -58,7 +58,7 @@ export async function POST(req) {
     const completion = await chatModel.invoke([
       { 
         role: "system", 
-        content: "Forget all previous tasks. You are an AI that converts HTML into modular React (Next.js) components using Tailwind CSS. Use best practices, extract meaningful content, and avoid unnecessary elements."
+        content: "Forget all previous tasks. You are an AI that converts HTML into modular React (Next.js) components using Tailwind CSS, you will have css styles provided and you need to convert them into tailwind sytax, pay attention to html tag class and then find all possible styling on that tag and convert it using css data provided, dont make up stuff or using something custom, user wont have arefernece to stylesheet you have, so you need to do it perfect. Use best practices, extract meaningful content, and avoid unnecessary elements."
       },
 
       { 
