@@ -22,7 +22,7 @@ const TestComponent = () => {
             </li>
             <li className="mb-2">
               <span id="footnote-2" className="hidden sm:block text-sm leading-5">
-                2. Trade‑in values will vary based on the condition...
+                2. Trade‑in values will vary based on the condition
               </span>
             </li>
             <li className="mb-2">To access and use all Apple Card features...</li>
