@@ -63,12 +63,12 @@ function Hero() {
           <div className="flex flex-col sm:flex-row gap-3 w-full max-w-[90%] sm:max-w-none justify-center">
             <Link href='/test-component'>
               <Button size="lg" className="gap-4 w-full sm:w-auto" variant="outline">
-                Test Component <PhoneCall className="w-4 h-4" />
+                Test Apple Footer <PhoneCall className="w-4 h-4" />
               </Button>
             </Link>
-            <Link href="/main">
+            <Link href="/starbucks-page">
               <Button size="lg" className="gap-4 w-full sm:w-auto">
-                Sign up here <MoveRight className="w-4 h-4" />
+                Test StarBucks Main Website <MoveRight className="w-4 h-4" />
               </Button>
             </Link>
           </div>
